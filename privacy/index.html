@@ -6,492 +6,201 @@
   <title>Privacy Policy — Taper</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
   <style>
-    /* ── Reset ──────────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── Tokens ─────────────────────────────────────────────────────── */
     :root {
-      --navy:  #0B3954;
-      --blue:  #2374AB;
-      --sky:   #B8D0EB;
-      --mist:  #D5DFE5;
-      --white: #ffffff;
-      --text:  #1a2e3d;
-      --sub:   #4a6275;
-      --border:#dce8f0;
-      --bg:    #f4f8fb;
+      --navy: #0B3954;
+      --blue: #2374AB;
+      --sky:  #B8D0EB;
     }
-
-    /* ── Base ───────────────────────────────────────────────────────── */
-    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'DM Sans', -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
+      background: #fff;
+      color: #222;
       font-size: 16px;
+      line-height: 1.7;
     }
 
-    /* ── Nav ────────────────────────────────────────────────────────── */
+    /* Nav */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
       background: var(--navy);
       padding: 0 32px;
+      height: 52px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 56px;
     }
 
     .nav-logo {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
-      color: var(--white);
+      color: #fff;
       text-decoration: none;
       letter-spacing: -0.3px;
     }
 
     .nav-back {
       font-size: 13px;
-      font-weight: 500;
       color: var(--sky);
       text-decoration: none;
-      opacity: 0.85;
+      opacity: 0.8;
       transition: opacity 0.15s;
     }
     .nav-back:hover { opacity: 1; }
 
-    /* ── Hero ───────────────────────────────────────────────────────── */
-    .hero {
-      background: var(--navy);
-      padding: 64px 32px 56px;
-      text-align: center;
-    }
-
-    .hero-eyebrow {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--sky);
-      margin-bottom: 16px;
-    }
-
-    .hero h1 {
-      font-size: clamp(32px, 5vw, 48px);
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: -1px;
-      line-height: 1.15;
-      margin-bottom: 16px;
-    }
-
-    .hero-meta {
-      font-size: 14px;
-      color: var(--sky);
-      opacity: 0.75;
-    }
-
-    /* ── Layout ─────────────────────────────────────────────────────── */
-    .container {
-      max-width: 760px;
+    /* Page */
+    .page {
+      max-width: 680px;
       margin: 0 auto;
       padding: 56px 24px 96px;
     }
 
-    /* ── Section ────────────────────────────────────────────────────── */
-    .section {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 36px 40px;
-      margin-bottom: 20px;
-    }
-
-    .section-label {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 8px;
-    }
-
-    .section h2 {
-      font-size: 20px;
+    h1 {
+      font-size: 28px;
       font-weight: 700;
       color: var(--navy);
-      margin-bottom: 16px;
-      letter-spacing: -0.3px;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
     }
 
-    .section p {
-      color: var(--sub);
-      margin-bottom: 14px;
-      font-size: 15px;
-    }
-
-    .section p:last-child { margin-bottom: 0; }
-
-    /* ── Data table ─────────────────────────────────────────────────── */
-    .data-grid {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 0;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-top: 20px;
+    .meta {
       font-size: 14px;
+      color: #888;
+      margin-bottom: 48px;
     }
 
-    .data-grid-header {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--navy);
-      background: var(--mist);
-      padding: 10px 16px;
-    }
-
-    .data-cell {
-      padding: 14px 16px;
-      border-top: 1px solid var(--border);
-      color: var(--sub);
-    }
-
-    .data-cell.label {
-      font-weight: 600;
-      color: var(--navy);
-      font-size: 13px;
-      background: #fafcfd;
-    }
-
-    /* ── Third-party chips ──────────────────────────────────────────── */
-    .vendor-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .vendor {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 16px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: #fafcfd;
-    }
-
-    .vendor-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: var(--navy);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+    h2 {
       font-size: 16px;
-    }
-
-    .vendor-name {
-      font-size: 14px;
       font-weight: 600;
       color: var(--navy);
-      margin-bottom: 2px;
-    }
-
-    .vendor-desc {
-      font-size: 13px;
-      color: var(--sub);
-      line-height: 1.5;
-    }
-
-    .vendor-desc a {
-      color: var(--blue);
-      text-decoration: none;
-    }
-    .vendor-desc a:hover { text-decoration: underline; }
-
-    /* ── Contact card ───────────────────────────────────────────────── */
-    .contact-card {
-      background: var(--navy);
-      border-radius: 12px;
-      padding: 36px 40px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .contact-card h2 {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--white);
+      margin-top: 40px;
       margin-bottom: 10px;
     }
 
-    .contact-card p {
-      color: var(--sky);
+    p {
+      color: #444;
+      margin-bottom: 12px;
       font-size: 15px;
-      margin-bottom: 20px;
-      opacity: 0.85;
     }
 
-    .contact-card a {
-      display: inline-block;
-      background: var(--blue);
-      color: var(--white);
-      text-decoration: none;
-      padding: 12px 28px;
-      border-radius: 100px;
-      font-size: 14px;
-      font-weight: 600;
-      transition: opacity 0.15s;
-    }
+    p:last-child { margin-bottom: 0; }
 
-    .contact-card a:hover { opacity: 0.85; }
-
-    /* ── TOC ────────────────────────────────────────────────────────── */
-    .toc {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px 32px;
-      margin-bottom: 28px;
-    }
-
-    .toc-title {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--navy);
-      margin-bottom: 14px;
-    }
-
-    .toc ol {
+    ul {
+      color: #444;
+      font-size: 15px;
       padding-left: 20px;
+      margin-bottom: 12px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
-    .toc a {
+    a {
       color: var(--blue);
-      font-size: 14px;
       text-decoration: none;
-      font-weight: 500;
+    }
+    a:hover { text-decoration: underline; }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 40px 0 0;
     }
 
-    .toc a:hover { text-decoration: underline; }
-
-    /* ── Footer ─────────────────────────────────────────────────────── */
     footer {
       text-align: center;
-      padding: 32px;
       font-size: 13px;
-      color: var(--sub);
-      border-top: 1px solid var(--border);
-    }
-
-    footer a {
-      color: var(--blue);
-      text-decoration: none;
-    }
-
-    /* ── Mobile ─────────────────────────────────────────────────────── */
-    @media (max-width: 600px) {
-      .section { padding: 24px 20px; }
-      .contact-card { padding: 28px 20px; }
-      .data-grid { grid-template-columns: 1fr; }
-      .data-grid-header:last-of-type { display: none; }
+      color: #aaa;
+      padding: 32px;
+      border-top: 1px solid #e8e8e8;
     }
   </style>
 </head>
 <body>
 
-  <!-- Nav -->
   <nav>
     <a class="nav-logo" href="/">taper</a>
-    <a class="nav-back" href="/">← Back to home</a>
+    <a class="nav-back" href="/">← Home</a>
   </nav>
 
-  <!-- Hero -->
-  <div class="hero">
-    <span class="hero-eyebrow">Legal</span>
+  <div class="page">
+
     <h1>Privacy Policy</h1>
-    <p class="hero-meta">Effective April 29, 2026 &nbsp;·&nbsp; Taper by Sean Lim</p>
-  </div>
+    <p class="meta">Effective April 29, 2026</p>
 
-  <!-- Content -->
-  <div class="container">
+    <p>Taper is a swim training journal app for iOS. This policy explains what data we collect, how we use it, and your choices. We collect only what we need to run the service. We do not sell your data. We do not run ads.</p>
 
-    <!-- TOC -->
-    <div class="toc">
-      <div class="toc-title">On this page</div>
-      <ol>
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#data-collected">Data We Collect</a></li>
-        <li><a href="#how-used">How We Use Your Data</a></li>
-        <li><a href="#third-parties">Third-Party Services</a></li>
-        <li><a href="#retention">Data Retention</a></li>
-        <li><a href="#children">Children's Privacy</a></li>
-        <li><a href="#rights">Your Rights</a></li>
-        <li><a href="#changes">Changes to This Policy</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ol>
-    </div>
+    <hr>
 
-    <!-- 1. Overview -->
-    <div class="section" id="overview">
-      <span class="section-label">01</span>
-      <h2>Overview</h2>
-      <p>Taper ("we", "our", "us") is a swim training journal app built for swimmers. This policy explains what data we collect when you use Taper on iOS, how we use it, who we share it with, and the choices you have.</p>
-      <p>We collect only what we need to provide the service. We do not sell your personal data. We do not run ads.</p>
-    </div>
+    <h2>Information We Collect</h2>
+    <p>When you use Taper we collect:</p>
+    <ul>
+      <li><strong>Account information</strong> — your email address and display name, provided by Apple Sign-In or Google Sign-In.</li>
+      <li><strong>Workout data</strong> — photos of whiteboards you capture, AI-parsed workout sets (distances, reps, rest intervals, stroke types), and total distances.</li>
+      <li><strong>Journal entries</strong> — optional feel ratings, swim tags, and notes you attach to a workout.</li>
+      <li><strong>Subscription status</strong> — whether you have an active Taper Pro subscription. Payment details are handled by Apple; we never see your card number.</li>
+      <li><strong>Basic device info</strong> — iOS version and device model, used only for compatibility and crash reporting.</li>
+    </ul>
 
-    <!-- 2. Data Collected -->
-    <div class="section" id="data-collected">
-      <span class="section-label">02</span>
-      <h2>Data We Collect</h2>
-      <p>We collect the following categories of information when you use Taper:</p>
+    <hr>
 
-      <div class="data-grid">
-        <div class="data-grid-header">Category</div>
-        <div class="data-grid-header">Details</div>
+    <h2>How We Use Your Information</h2>
+    <ul>
+      <li><strong>Syncing your workouts</strong> across your devices via our cloud backend (Supabase).</li>
+      <li><strong>Parsing whiteboard photos</strong> — images are sent to OpenAI's API to extract your workout. They are not stored by us after parsing and are not used to train OpenAI models.</li>
+      <li><strong>Managing your subscription</strong> — we share your user ID with RevenueCat to verify your entitlement across devices.</li>
+      <li><strong>Authentication</strong> — sign-in tokens from Apple or Google are exchanged with Supabase to create your session.</li>
+    </ul>
 
-        <div class="data-cell label">Account</div>
-        <div class="data-cell">Your email address and display name, provided by Apple Sign-In or Google Sign-In when you create an account.</div>
+    <hr>
 
-        <div class="data-cell label">Workout data</div>
-        <div class="data-cell">Photos of whiteboards you capture, AI-parsed workout sets (distances, reps, rest intervals, stroke types), workout names, and total distances.</div>
+    <h2>Third-Party Services</h2>
+    <p>Taper uses the following services, each governed by their own privacy policy:</p>
+    <ul>
+      <li><strong>Supabase</strong> — database and authentication. <a href="https://supabase.com/privacy" target="_blank">Privacy Policy</a></li>
+      <li><strong>OpenAI</strong> — whiteboard photo parsing. <a href="https://openai.com/policies/privacy-policy" target="_blank">Privacy Policy</a></li>
+      <li><strong>RevenueCat</strong> — subscription management. <a href="https://www.revenuecat.com/privacy" target="_blank">Privacy Policy</a></li>
+      <li><strong>Apple Sign-In</strong> — authentication. <a href="https://www.apple.com/legal/privacy/" target="_blank">Privacy Policy</a></li>
+      <li><strong>Google Sign-In</strong> — authentication. <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a></li>
+    </ul>
 
-        <div class="data-cell label">Journal data</div>
-        <div class="data-cell">Optional entries you add: feel ratings, swim tags, and personal notes attached to a workout.</div>
+    <hr>
 
-        <div class="data-cell label">Subscription</div>
-        <div class="data-cell">Your subscription status (free or Pro) managed via RevenueCat. We do not store payment card details — these are handled by Apple.</div>
+    <h2>Data Retention</h2>
+    <p>Your account and workout data is kept for as long as you have an active Taper account. When you sign out, your local data is cleared from the device. Cloud data remains and is restored when you sign back in.</p>
+    <p>To delete your account and all associated data, email <a href="mailto:support@taper.fit">support@taper.fit</a>. We will complete the deletion within 30 days.</p>
 
-        <div class="data-cell label">Device info</div>
-        <div class="data-cell">iOS version and device model, collected by third-party services for crash reporting and compatibility purposes only.</div>
-      </div>
-    </div>
+    <hr>
 
-    <!-- 3. How Used -->
-    <div class="section" id="how-used">
-      <span class="section-label">03</span>
-      <h2>How We Use Your Data</h2>
-      <p>Your data is used solely to provide and improve Taper:</p>
-      <p><strong style="color:var(--navy)">Providing the service.</strong> We sync your workouts across your devices via our secure cloud backend (Supabase), so your training history is always up to date.</p>
-      <p><strong style="color:var(--navy)">AI workout parsing.</strong> When you photograph a whiteboard, the image is sent to OpenAI's API to extract and structure your workout. Images are used only for this inference request and are not stored or used to train OpenAI models (per OpenAI's API data policy).</p>
-      <p><strong style="color:var(--navy)">Subscription management.</strong> We use RevenueCat to verify your subscription entitlement across devices. Your Supabase user ID is shared with RevenueCat for this purpose only.</p>
-      <p><strong style="color:var(--navy)">Authentication.</strong> Sign-in tokens from Apple or Google are exchanged with Supabase to create and maintain your session securely.</p>
-    </div>
+    <h2>Children's Privacy</h2>
+    <p>Taper is not directed at children under 13. We do not knowingly collect personal information from children under 13. Contact us if you believe a child has provided us data and we will delete it promptly.</p>
 
-    <!-- 4. Third Parties -->
-    <div class="section" id="third-parties">
-      <span class="section-label">04</span>
-      <h2>Third-Party Services</h2>
-      <p>Taper uses the following trusted third-party providers. Each has their own privacy policy governing their use of data:</p>
+    <hr>
 
-      <div class="vendor-list">
-        <div class="vendor">
-          <div class="vendor-icon">🗄️</div>
-          <div>
-            <div class="vendor-name">Supabase</div>
-            <div class="vendor-desc">Stores your account, workouts, and journal data securely. Servers are located in the United States. <a href="https://supabase.com/privacy" target="_blank">Privacy Policy →</a></div>
-          </div>
-        </div>
+    <h2>Your Rights</h2>
+    <p>You can access, correct, or delete your data at any time:</p>
+    <ul>
+      <li>Use the share feature in Taper to export your workouts.</li>
+      <li>Email <a href="mailto:support@taper.fit">support@taper.fit</a> to request account deletion.</li>
+      <li>Manage or cancel your subscription via Settings in the app or through your Apple ID.</li>
+    </ul>
+    <p>If you are in the EU or UK, you may have additional rights under GDPR, including the right to data portability and to lodge a complaint with a supervisory authority.</p>
 
-        <div class="vendor">
-          <div class="vendor-icon">🤖</div>
-          <div>
-            <div class="vendor-name">OpenAI</div>
-            <div class="vendor-desc">Processes whiteboard photos to parse workout structure using GPT-4o. Images sent via the API are not used to train OpenAI models. <a href="https://openai.com/policies/privacy-policy" target="_blank">Privacy Policy →</a></div>
-          </div>
-        </div>
+    <hr>
 
-        <div class="vendor">
-          <div class="vendor-icon">💳</div>
-          <div>
-            <div class="vendor-name">RevenueCat</div>
-            <div class="vendor-desc">Manages Taper Pro subscription status and entitlements across your devices. <a href="https://www.revenuecat.com/privacy" target="_blank">Privacy Policy →</a></div>
-          </div>
-        </div>
+    <h2>Changes to This Policy</h2>
+    <p>We may update this policy from time to time. The effective date at the top of the page will reflect the latest revision. For material changes we will notify you via the app or by email.</p>
 
-        <div class="vendor">
-          <div class="vendor-icon">🍎</div>
-          <div>
-            <div class="vendor-name">Apple Sign-In</div>
-            <div class="vendor-desc">Provides secure, privacy-preserving authentication. Apple may offer you the option to hide your email address. <a href="https://www.apple.com/legal/privacy/" target="_blank">Privacy Policy →</a></div>
-          </div>
-        </div>
+    <hr>
 
-        <div class="vendor">
-          <div class="vendor-icon">🔵</div>
-          <div>
-            <div class="vendor-name">Google Sign-In</div>
-            <div class="vendor-desc">An alternative authentication method. We receive only your email address and display name from Google. <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy →</a></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5. Retention -->
-    <div class="section" id="retention">
-      <span class="section-label">05</span>
-      <h2>Data Retention</h2>
-      <p>Your account and workout data is retained for as long as you have an active Taper account.</p>
-      <p>When you sign out of Taper, your workout data is immediately removed from your device. Your cloud data (workouts, journal) remains stored in Supabase and is restored when you sign back in.</p>
-      <p>To permanently delete all your data, email us at <a href="mailto:support@taper.fit" style="color:var(--blue);text-decoration:none;font-weight:500">support@taper.fit</a> and we will delete your account and all associated data within 30 days.</p>
-    </div>
-
-    <!-- 6. Children -->
-    <div class="section" id="children">
-      <span class="section-label">06</span>
-      <h2>Children's Privacy</h2>
-      <p>Taper is not directed at children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us personal information, please contact us and we will delete it promptly.</p>
-    </div>
-
-    <!-- 7. Your Rights -->
-    <div class="section" id="rights">
-      <span class="section-label">07</span>
-      <h2>Your Rights</h2>
-      <p>You have the right to access, correct, or delete your personal data at any time. You can:</p>
-      <p><strong style="color:var(--navy)">Export your workouts</strong> using the share feature built into Taper.</p>
-      <p><strong style="color:var(--navy)">Delete your account and data</strong> by emailing <a href="mailto:support@taper.fit" style="color:var(--blue);text-decoration:none;font-weight:500">support@taper.fit</a>.</p>
-      <p><strong style="color:var(--navy)">Manage your subscription</strong> via the Customer Center in Taper's Settings screen or through your Apple ID subscription settings.</p>
-      <p>If you are located in the EU or UK, you may also have rights under GDPR or UK GDPR including the right to data portability and the right to lodge a complaint with your local supervisory authority.</p>
-    </div>
-
-    <!-- 8. Changes -->
-    <div class="section" id="changes">
-      <span class="section-label">08</span>
-      <h2>Changes to This Policy</h2>
-      <p>We may update this Privacy Policy from time to time. When we do, we will update the effective date at the top of this page. For material changes, we will notify you via the app or by email.</p>
-      <p>Continued use of Taper after changes are posted constitutes acceptance of the updated policy.</p>
-    </div>
-
-    <!-- Contact -->
-    <div class="contact-card" id="contact">
-      <h2>Questions or requests?</h2>
-      <p>We're happy to help with anything related to your privacy or data.</p>
-      <a href="mailto:support@taper.fit">support@taper.fit</a>
-    </div>
+    <h2>Contact</h2>
+    <p>Questions or requests about your privacy? Email us at <a href="mailto:support@taper.fit">support@taper.fit</a>.</p>
 
   </div>
 
-  <!-- Footer -->
   <footer>
     &copy; 2026 Taper &nbsp;·&nbsp; <a href="/">taper.fit</a>
   </footer>
