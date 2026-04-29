@@ -1,19 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Taper</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taper — Your Swim Training Journal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
   <style>
-    body { font-family: -apple-system, sans-serif; max-width: 600px; margin: 80px auto; padding: 0 24px; color: #1a1a2e; }
-    h1 { font-size: 2.5rem; }
-    p { color: #666; }
-    a { color: #0077cc; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0B3954;
+      --blue: #2374AB;
+      --sky:  #B8D0EB;
+      --mist: #D5DFE5;
+    }
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      background: var(--navy);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .logo {
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .tagline {
+      font-size: 17px;
+      color: var(--sky);
+      opacity: 0.85;
+      font-weight: 400;
+      margin-bottom: 48px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 100px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--sky);
+      margin-bottom: 48px;
+    }
+    .links {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .links a {
+      font-size: 13px;
+      color: var(--sky);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.15s;
+    }
+    .links a:hover { opacity: 1; }
   </style>
 </head>
 <body>
-  <h1>Taper</h1>
-  <p>Your swim training journal.</p>
-  <p><a href="/privacy.html">Privacy Policy</a></p>
+  <div class="logo">taper</div>
+  <div class="tagline">Your swim training journal.</div>
+  <div class="badge">🏊 Coming soon to the App Store</div>
+  <div class="links">
+    <a href="/privacy">Privacy Policy</a>
+    <a href="mailto:support@taper.fit">Contact</a>
+  </div>
 </body>
 </html>
