@@ -253,17 +253,26 @@
       function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
       function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
 
+      // Best-effort direct open: some in-app browsers hand an itms-apps:// link
+      // straight to the App Store app. Try it on tap; if we're still here a beat
+      // later, fall back to the "Open in external browser" steps.
+      var APPSTORE_SCHEME = 'itms-apps://apps.apple.com/us/app/taper-swim/id6764488000';
+
       if (badge) {
         badge.addEventListener('click', function (e) {
           if (!isInAppBrowser()) return;   // real browser → open the App Store normally
           e.preventDefault();
-          if (isDownloadIntent) {
-            openModal();
-          } else {
-            // Tag the URL so that when the user picks "Open in Browser", Safari
-            // lands on ?dl=1 and jumps straight to the App Store (redirect in <head>).
-            location.href = '?dl=1';
-          }
+          if (isDownloadIntent) { openModal(); return; }
+
+          var bailed = false;
+          var fallback = setTimeout(function () {
+            if (!bailed) location.href = '?dl=1';   // still here → show the manual steps
+          }, 700);
+          var opened = function () { bailed = true; clearTimeout(fallback); };
+          document.addEventListener('visibilitychange', function () { if (document.hidden) opened(); }, { once: true });
+          window.addEventListener('pagehide', opened, { once: true });
+
+          window.location.href = APPSTORE_SCHEME;   // attempt the App Store app
         });
       }
 
