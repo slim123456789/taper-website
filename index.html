@@ -8,6 +8,17 @@
   <!-- Anti-clickjacking: frame-ancestors / X-Frame-Options are header-only and
        can't be set on GitHub Pages, so bust out of any framing here instead. -->
   <script>if (self !== top) { try { top.location = self.location; } catch (e) {} }</script>
+  <script>
+    // Download shortcut: taper.fit/?dl=1 opened in a REAL browser jumps straight
+    // to the App Store. Inside an in-app browser it does nothing here — the popup
+    // guides the user to "Open in Browser" first, then this fires in Safari.
+    (function () {
+      if (new URLSearchParams(location.search).get('dl') !== '1') return;
+      var ua = navigator.userAgent || navigator.vendor || '';
+      var inApp = /Instagram|FBAN|FBAV|FBIOS|FB_IAB|Messenger|Line\/|Snapchat|Pinterest|musical_ly|Musically|BytedanceWebview|TikTok|Twitter|WhatsApp/i.test(ua);
+      if (!inApp) location.replace('https://apps.apple.com/us/app/taper-swim/id6764488000');
+    })();
+  </script>
   <title>Taper — Your Swim Training Journal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -237,15 +248,27 @@
       var badge = document.getElementById('appStoreBadge');
       var modal = document.getElementById('iabModal');
       var closeBtn = document.getElementById('iabClose');
+      var isDownloadIntent = new URLSearchParams(location.search).get('dl') === '1';
 
       function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
       function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
 
       if (badge) {
         badge.addEventListener('click', function (e) {
-          if (isInAppBrowser()) { e.preventDefault(); openModal(); }
+          if (!isInAppBrowser()) return;   // real browser → open the App Store normally
+          e.preventDefault();
+          if (isDownloadIntent) {
+            openModal();
+          } else {
+            // Tag the URL so that when the user picks "Open in Browser", Safari
+            // lands on ?dl=1 and jumps straight to the App Store (redirect in <head>).
+            location.href = '?dl=1';
+          }
         });
       }
+
+      // Arrived with the download flag but still inside the in-app browser → show steps.
+      if (isDownloadIntent && isInAppBrowser()) openModal();
       closeBtn.addEventListener('click', closeModal);
       modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
