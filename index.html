@@ -179,6 +179,21 @@
       display: inline-block; background: rgba(11, 57, 84, 0.08);
       border-radius: 6px; padding: 0 6px; font-weight: 700; letter-spacing: 1px;
     }
+    .modal-btn {
+      display: block; width: 100%; margin: 4px 0 14px; padding: 13px;
+      background: var(--blue); color: #fff; border: none; border-radius: 12px;
+      font-size: 16px; font-weight: 700; font-family: inherit; cursor: pointer;
+    }
+    .modal-btn:active { opacity: 0.9; }
+    .modal-or {
+      text-align: center; font-size: 11px; color: #8a99a3;
+      text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px;
+    }
+    .modal-link {
+      display: block; width: 100%; margin-top: 14px; padding: 6px;
+      background: none; border: none; color: var(--blue);
+      font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer;
+    }
 
     /* Very short screens: shrink the phone a touch more so the badge stays visible */
     @media (max-height: 620px) {
@@ -230,55 +245,108 @@
     <div class="modal">
       <button id="iabClose" class="modal-close" aria-label="Close">&times;</button>
       <h2 id="iabTitle">Open in Safari to download</h2>
-      <div class="sub">Instagram can’t open App Store links directly.</div>
+      <div class="sub">Instagram blocks App Store links in its in-app browser.</div>
+      <button id="iabRetry" class="modal-btn">Open in Safari</button>
+      <div class="modal-or">or do it manually</div>
       <ol>
         <li>Tap the <span class="dots">•••</span> button in the top-right corner</li>
         <li>Choose <strong>Open in external browser</strong></li>
       </ol>
+      <button id="iabCopy" class="modal-link">Copy download link</button>
     </div>
   </div>
 
   <script>
     (function () {
-      function isInAppBrowser() {
-        var ua = navigator.userAgent || navigator.vendor || '';
-        return /Instagram|FBAN|FBAV|FBIOS|FB_IAB|Messenger|Line\/|Snapchat|Pinterest|musical_ly|Musically|BytedanceWebview|TikTok|Twitter|WhatsApp/i.test(ua);
+      var APP_STORE_URL = 'https://apps.apple.com/us/app/taper-swim/id6764488000';
+      var ua = navigator.userAgent || navigator.vendor || '';
+
+      // --- Environment detection ---
+      function isInstagram() { return /Instagram/i.test(ua); }
+      function isThreads()   { return /Barcelona/i.test(ua); }
+      function isFacebook()  { return /FBAN|FBAV|FB_IAB|FB4A|FBIOS|Messenger/i.test(ua); }
+      function isOtherInApp(){ return /Line\/|Snapchat|Pinterest|musical_ly|Musically|BytedanceWebview|TikTok|Twitter|WhatsApp/i.test(ua); }
+      function isInApp()     { return isInstagram() || isThreads() || isFacebook() || isOtherInApp(); }
+      function isIOS()       { return /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); }
+      function isAndroid()   { return /Android/i.test(ua); }
+
+      // --- Break out of the in-app webview to the native browser ---
+      // MUST run synchronously inside the click, or iOS silently drops it.
+      // Returns true if a break-out was actually attempted.
+      function breakOut() {
+        if (isIOS()) {
+          if (isInstagram() || isThreads()) {
+            // The IG/Threads app intercepts this scheme and re-opens the URL in Safari.
+            location.href = 'instagram://extbrowser/?url=' + encodeURIComponent(APP_STORE_URL);
+            return true;
+          }
+          if (isFacebook()) {
+            window.open('x-safari-' + APP_STORE_URL, '_blank');
+            return true;
+          }
+          return false; // other iOS in-app browsers: no reliable scheme → manual steps
+        }
+        if (isAndroid()) {
+          location.href = 'intent://' + APP_STORE_URL.replace(/^https?:\/\//, '') + '#Intent;scheme=https;end';
+          return true;
+        }
+        return false;
       }
 
-      var badge = document.getElementById('appStoreBadge');
-      var modal = document.getElementById('iabModal');
+      var badge    = document.getElementById('appStoreBadge');
+      var modal    = document.getElementById('iabModal');
       var closeBtn = document.getElementById('iabClose');
-      var isDownloadIntent = new URLSearchParams(location.search).get('dl') === '1';
+      var retryBtn = document.getElementById('iabRetry');
+      var copyBtn  = document.getElementById('iabCopy');
 
-      function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+      function openModal() {
+        // Tag the URL so the manual "Open in external browser" step lands on
+        // taper.fit/?dl=1, which redirects to the App Store (see <head> script).
+        try { history.replaceState({}, '', '?dl=1'); } catch (e) {}
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
       function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
 
-      // Best-effort direct open: some in-app browsers hand an itms-apps:// link
-      // straight to the App Store app. Try it on tap; if we're still here a beat
-      // later, fall back to the "Open in external browser" steps.
-      var APPSTORE_SCHEME = 'itms-apps://apps.apple.com/us/app/taper-swim/id6764488000';
+      // Fire the break-out; if we didn't actually leave within 1.5s, show the modal.
+      function attemptDownload() {
+        if (!breakOut()) { openModal(); return; }
+        var done = false;
+        function leaving() { done = true; }
+        window.addEventListener('pagehide', leaving, { once: true });
+        window.addEventListener('blur', leaving, { once: true });
+        document.addEventListener('visibilitychange', function () { if (document.hidden) leaving(); }, { once: true });
+        setTimeout(function () { if (!done) openModal(); }, 1500);
+      }
 
       if (badge) {
         badge.addEventListener('click', function (e) {
-          if (!isInAppBrowser()) return;   // real browser → open the App Store normally
+          if (!isInApp()) return;      // normal browser → the <a href> opens the App Store
           e.preventDefault();
-          if (isDownloadIntent) { openModal(); return; }
-
-          var bailed = false;
-          var fallback = setTimeout(function () {
-            if (!bailed) location.href = '?dl=1';   // still here → show the manual steps
-          }, 700);
-          var opened = function () { bailed = true; clearTimeout(fallback); };
-          document.addEventListener('visibilitychange', function () { if (document.hidden) opened(); }, { once: true });
-          window.addEventListener('pagehide', opened, { once: true });
-
-          window.location.href = APPSTORE_SCHEME;   // attempt the App Store app
+          attemptDownload();
         });
       }
 
-      // Arrived with the download flag but still inside the in-app browser → show steps.
-      if (isDownloadIntent && isInAppBrowser()) openModal();
-      closeBtn.addEventListener('click', closeModal);
+      if (retryBtn) retryBtn.addEventListener('click', attemptDownload);
+      if (copyBtn) copyBtn.addEventListener('click', function () {
+        function feedback() {
+          copyBtn.textContent = 'Link copied ✓';
+          setTimeout(function () { copyBtn.textContent = 'Copy download link'; }, 1800);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(APP_STORE_URL).then(feedback).catch(function () { legacyCopy(feedback); });
+        } else { legacyCopy(feedback); }
+      });
+      function legacyCopy(cb) {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = APP_STORE_URL; ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.focus(); ta.select();
+          document.execCommand('copy'); document.body.removeChild(ta); cb();
+        } catch (e) {}
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
       modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
 
