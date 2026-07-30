@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Taper — Your Swim Training Journal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,47 +15,94 @@
       --sky:  #B8D0EB;
       --mist: #D5DFE5;
     }
+    html, body { height: 100%; }
     body {
       font-family: 'DM Sans', -apple-system, sans-serif;
       background: var(--navy);
       color: #fff;
       min-height: 100vh;
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 48px 24px;
+      padding: 22px 20px calc(20px + env(safe-area-inset-bottom));
       text-align: center;
+      overflow-x: hidden;
     }
+
     .logo {
-      font-size: 42px;
+      font-size: 34px;
       font-weight: 700;
       letter-spacing: -1px;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
     .tagline {
-      font-size: 17px;
+      font-size: 15px;
       color: var(--sky);
       opacity: 0.85;
       font-weight: 400;
-      margin-bottom: 48px;
+      margin-bottom: 22px;
     }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
+
+    /* ---- iPhone-framed looping video ---- */
+    .phone {
+      position: relative;
+      height: min(54svh, 440px);
+      aspect-ratio: 216 / 452;
+      background: linear-gradient(155deg, #34343a 0%, #0a0a0a 42%);
+      border-radius: 14% / 6.7%;
+      padding: 2.4%;
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.55),
+                  inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+      margin-bottom: 26px;
+      flex: 0 0 auto;
+    }
+    .phone .screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 11.5% / 5.5%;
+      overflow: hidden;
+      background: #000;
+    }
+    .phone video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .phone .island {
+      position: absolute;
+      top: 2.6%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30%;
+      height: 3.0%;
+      min-height: 9px;
+      background: #000;
       border-radius: 100px;
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--sky);
-      margin-bottom: 48px;
+      z-index: 3;
     }
+    /* side buttons */
+    .phone .btn { position: absolute; background: #0b0b0b; border-radius: 2px; }
+    .phone .btn.pw { right: -1.4%; top: 27%; width: 1.5%; height: 10%; }
+    .phone .btn.vu { left: -1.4%; top: 21%; width: 1.5%; height: 6.5%; }
+    .phone .btn.vd { left: -1.4%; top: 30%; width: 1.5%; height: 6.5%; }
+
+    /* ---- App Store badge ---- */
+    .appstore {
+      display: inline-block;
+      line-height: 0;
+      margin-bottom: 20px;
+      transition: transform 0.12s ease;
+    }
+    .appstore:active { transform: scale(0.96); }
+    .appstore svg { width: 178px; height: auto; display: block; }
+
     .links {
       display: flex;
-      gap: 24px;
+      gap: 22px;
       justify-content: center;
       flex-wrap: wrap;
     }
@@ -67,16 +114,144 @@
       transition: opacity 0.15s;
     }
     .links a:hover { opacity: 1; }
+
+    /* ---- "Open in Safari" popup (for in-app browsers like Instagram) ---- */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(6, 20, 30, 0.72);
+      -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center;
+      padding: 24px; z-index: 1000;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff; color: var(--navy);
+      border-radius: 22px; padding: 30px 24px 24px;
+      max-width: 344px; width: 100%; text-align: left; position: relative;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+      animation: pop 0.22s ease;
+    }
+    @keyframes pop {
+      from { opacity: 0; transform: scale(0.94) translateY(10px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .modal-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 30px; height: 30px; border: none;
+      background: rgba(11, 57, 84, 0.07); border-radius: 50%;
+      font-size: 17px; color: var(--navy); cursor: pointer; line-height: 1;
+    }
+    .modal h2 { font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 6px; }
+    .modal .sub { font-size: 14px; color: #5b6b76; text-align: center; margin-bottom: 20px; }
+    .modal ol { list-style: none; counter-reset: step; }
+    .modal ol li {
+      position: relative; padding: 12px 0 12px 44px;
+      font-size: 15px; line-height: 1.35;
+      border-top: 1px solid rgba(11, 57, 84, 0.08);
+    }
+    .modal ol li:first-child { border-top: none; }
+    .modal ol li::before {
+      counter-increment: step; content: counter(step);
+      position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      width: 28px; height: 28px; background: var(--blue); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+    }
+    .modal strong { font-weight: 700; }
+    .dots {
+      display: inline-block; background: rgba(11, 57, 84, 0.08);
+      border-radius: 6px; padding: 0 6px; font-weight: 700; letter-spacing: 1px;
+    }
+
+    /* Very short screens: shrink the phone a touch more so the badge stays visible */
+    @media (max-height: 620px) {
+      .phone { height: 48svh; margin-bottom: 18px; }
+      .tagline { margin-bottom: 16px; }
+    }
   </style>
 </head>
 <body>
   <div class="logo">taper</div>
   <div class="tagline">Your swim training journal.</div>
-  <div class="badge">🏊 Coming soon to the App Store</div>
+
+  <div class="phone">
+    <div class="btn vu"></div>
+    <div class="btn vd"></div>
+    <div class="btn pw"></div>
+    <div class="screen">
+      <div class="island"></div>
+      <video src="applander.mp4" autoplay loop muted playsinline preload="auto"
+             disablepictureinpicture></video>
+    </div>
+  </div>
+
+  <a id="appStoreBadge" class="appstore"
+     href="https://apps.apple.com/us/app/taper-swim/id6764488000"
+     aria-label="Download Taper on the App Store">
+    <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Download on the App Store">
+      <rect width="120" height="40" rx="8" fill="#000000" />
+      <path fill="#ffffff" transform="translate(13,7) scale(1.08)"
+            d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+      <text x="43" y="16" fill="#ffffff"
+            font-family="-apple-system,'SF Pro Display',Helvetica,Arial,sans-serif"
+            font-size="7.2">Download on the</text>
+      <text x="42.5" y="31" fill="#ffffff"
+            font-family="-apple-system,'SF Pro Display',Helvetica,Arial,sans-serif"
+            font-weight="500" font-size="17">App Store</text>
+    </svg>
+  </a>
+
   <div class="links">
     <a href="/privacy">Privacy Policy</a>
     <a href="/terms">Terms of Service</a>
     <a href="mailto:admin@taper.fit">Contact</a>
   </div>
+
+  <!-- Popup shown when opened inside an in-app browser (Instagram, etc.),
+       where App Store links don't work. -->
+  <div id="iabModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="iabTitle">
+    <div class="modal">
+      <button id="iabClose" class="modal-close" aria-label="Close">&times;</button>
+      <h2 id="iabTitle">Open in Safari to download</h2>
+      <div class="sub">Instagram can’t open App Store links directly.</div>
+      <ol>
+        <li>Tap the <span class="dots">•••</span> button in the top-right corner</li>
+        <li>Choose <strong>Open in Browser</strong></li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      function isInAppBrowser() {
+        var ua = navigator.userAgent || navigator.vendor || '';
+        return /Instagram|FBAN|FBAV|FBIOS|FB_IAB|Messenger|Line\/|Snapchat|Pinterest|musical_ly|Musically|BytedanceWebview|TikTok|Twitter|WhatsApp/i.test(ua);
+      }
+
+      var badge = document.getElementById('appStoreBadge');
+      var modal = document.getElementById('iabModal');
+      var closeBtn = document.getElementById('iabClose');
+
+      function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+      function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+
+      if (badge) {
+        badge.addEventListener('click', function (e) {
+          if (isInAppBrowser()) { e.preventDefault(); openModal(); }
+        });
+      }
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+      // Some in-app browsers block autoplay; nudge playback on first interaction.
+      var vid = document.querySelector('.phone video');
+      if (vid) {
+        var kick = function () { vid.play().catch(function () {}); };
+        document.addEventListener('touchstart', kick, { once: true });
+        document.addEventListener('click', kick, { once: true });
+      }
+    })();
+  </script>
 </body>
 </html>
