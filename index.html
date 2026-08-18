@@ -64,11 +64,16 @@
     /* ---- iPhone-framed looping video ---- */
     .phone {
       position: relative;
-      height: min(54svh, 440px);
+      /* Bezel must track the phone's own size, not the viewport. `padding: 2.4%`
+         resolves against the *body* width, so on wide desktop windows the bezel
+         ballooned (~30px) and squeezed the screen to the wrong aspect ratio,
+         over-cropping the video. Derive height and bezel from one var instead. */
+      --ph: min(54svh, 440px);
+      height: var(--ph);
       aspect-ratio: 216 / 452;
       background: linear-gradient(155deg, #34343a 0%, #0a0a0a 42%);
       border-radius: 14% / 6.7%;
-      padding: 2.4%;
+      padding: calc(var(--ph) * 0.0115);
       box-shadow: 0 26px 60px rgba(0, 0, 0, 0.55),
                   inset 0 0 0 1px rgba(255, 255, 255, 0.14);
       margin-bottom: 26px;
@@ -197,7 +202,7 @@
 
     /* Very short screens: shrink the phone a touch more so the badge stays visible */
     @media (max-height: 620px) {
-      .phone { height: 48svh; margin-bottom: 18px; }
+      .phone { --ph: 48svh; margin-bottom: 18px; }
       .tagline { margin-bottom: 16px; }
     }
   </style>
