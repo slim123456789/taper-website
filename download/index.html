@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'none'; img-src 'self' data:; font-src https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; media-src 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'none'; img-src 'self' data:; font-src https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://us-assets.i.posthog.com; connect-src https://us.i.posthog.com https://us-assets.i.posthog.com; media-src 'self'" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <script>if (self !== top) { try { top.location = self.location; } catch (e) {} }</script>
   <script src="/iab.js"></script>
@@ -78,6 +78,8 @@
     .modal-or { text-align: center; font-size: 11px; color: #8a99a3; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; }
     .modal-link { display: block; width: 100%; margin-top: 14px; padding: 6px; background: none; border: none; color: var(--blue); font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer; }
   </style>
+  <!-- PostHog analytics: page-visit + click tracking. See /posthog.js. -->
+  <script src="/posthog.js"></script>
 </head>
 <body>
   <div class="logo">taper</div>
