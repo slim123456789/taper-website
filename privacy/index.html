@@ -136,7 +136,7 @@
   <div class="page">
 
     <h1>Privacy Policy</h1>
-    <p class="meta">Effective April 29, 2026 &nbsp;·&nbsp; Last updated July 11, 2026</p>
+    <p class="meta">Effective April 29, 2026 &nbsp;·&nbsp; Last updated October 17, 2026</p>
 
     <p>Taper is a swim training journal app for iOS. This policy explains what data we collect, how we use it, and your choices. We collect only what we need to run the service. We do not sell your data. We do not run ads.</p>
 
@@ -159,7 +159,7 @@
     <h2>How We Use Your Information</h2>
     <ul>
       <li><strong>Syncing your workouts and profile</strong> across your devices via our cloud backend (Supabase).</li>
-      <li><strong>Parsing whiteboard photos</strong> — images are sent to OpenAI's API to extract your workout. They are not stored by us after parsing and are not used to train OpenAI models.</li>
+      <li><strong>Parsing whiteboard photos</strong> — the photo and the text read from it are sent to Anthropic's API (Claude) to extract your workout. Under Anthropic's commercial terms, this data is not used to train their models. Versions of the app up to 1.1.11 send photos to OpenAI's API instead, which does not use them to train its models. Your photos are stored with your workouts so you can view them later.</li>
       <li><strong>Managing your subscription</strong> — we share your user ID with RevenueCat to verify your entitlement across devices.</li>
       <li><strong>Authentication</strong> — sign-in tokens from Apple are exchanged with Supabase to create your session.</li>
       <li><strong>Understanding and improving the app</strong> — we use product analytics (via PostHog) to see how features are used, find where people get stuck, fix bugs and crashes, and decide what to build next. We do not use this data for advertising, and we do not sell it.</li>
@@ -176,7 +176,8 @@
     <p>Taper uses the following services, each governed by their own privacy policy:</p>
     <ul>
       <li><strong>Supabase</strong> — database and authentication. <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
-      <li><strong>OpenAI</strong> — whiteboard photo parsing. <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+      <li><strong>Anthropic</strong> — whiteboard photo parsing. <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+      <li><strong>OpenAI</strong> — whiteboard photo parsing in app versions 1.1.11 and earlier. <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
       <li><strong>RevenueCat</strong> — subscription management. <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
       <li><strong>PostHog</strong> — product analytics and error tracking, processed on PostHog Cloud (US). <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
       <li><strong>Sign in with Apple</strong> — authentication. <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
